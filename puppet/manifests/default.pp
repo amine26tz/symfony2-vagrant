@@ -13,24 +13,14 @@ class dev-packages {
     include gcc
     include wget
 
-    $devPackages = [ "vim", "curl", "git", "nodejs", "npm", "capistrano", "rubygems", "openjdk-7-jdk", "libaugeas-ruby" ]
+    $devPackages = [ "vim", "curl", "git", "capistrano", "rubygems", "openjdk-7-jdk", "libaugeas-ruby" ]
     package { $devPackages:
         ensure => "installed",
         require => Exec['apt-get update'],
     }
 
-    exec { 'install less using npm':
-        command => 'npm install less -g',
-        require => Package["npm"],
-    }
-
     exec { 'install capifony using RubyGems':
         command => 'gem install capifony',
-        require => Package["rubygems"],
-    }
-
-    exec { 'install sass with compass using RubyGems':
-        command => 'gem install compass',
         require => Package["rubygems"],
     }
 
@@ -41,7 +31,7 @@ class dev-packages {
 }
 
 class nginx-setup {
-    
+
     include nginx
 
     package { "python-software-properties":
@@ -214,4 +204,3 @@ include php-setup
 include composer
 include phpqatools
 include memcached
-include redis
